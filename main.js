@@ -1,36 +1,39 @@
 const form = document.getElementById('form-cadastro');
 const nome = [];
 const numero = [];
-let linha = '';
+
+let linhas = '';
 
 form.addEventListener('submit', function(e) {
     e.preventDefault();
 
     adicionarLinha();
     atualizaTabela();
-})
+});
 
 function adicionarLinha() {
-    const inputNomeContato = document.getElementById('nome-contato').value;
-    const inputNumeroContato = document.getElementById('numero-contato').value;
+    const inputNomeContato = document.getElementById('nome-contato');
+    const inputNumeroContato = document.getElementById('numero-contato');
 
-    if (nome.includes(inputNomeContato)) {
-        alert(`Contato ${inputNomeContato} ja cadastrado`);
+    if (nome.includes(inputNomeContato.value)) {
+        alert(`Contato ${inputNomeContato.value} ja foi cadastrado`);
     } else {
-        nome.push(inputNomeContato);
-        numero.push(parseFloat(inputNumeroContato));
+        nome.push(inputNomeContato.value);
+        numero.push(parseFloat(inputNumeroContato.value));
+
+        let linha = '<tr>';
+        linha += `<td>${inputNomeContato.value}</td>`;
+        linha += `<td>${inputNumeroContato.value}</td>`;
+        linha += '</tr>';
+
+        linhas += linha;
     }
+    
+    inputNomeContato.value = '';
+    inputNumeroContato.value = '';
 }
 
 function atualizaTabela() {
     const corpoTabela = document.querySelector('tbody');
-
-    for (let i = 0; i < nome.length; i++) {
-        linha += '<tr>';
-        linha += '<td>${nome[i]}<td>';
-        linha += '<td>${numero[i]}<td>';
-        linha += '</tr>';
-    }
-
-    corpoTabela.innerHTML = linha;
+    corpoTabela.innerHTML = linhas;
 }
