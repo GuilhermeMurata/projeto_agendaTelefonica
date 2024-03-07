@@ -1,7 +1,6 @@
 const form = document.getElementById('form-cadastro');
 const nome = [];
 const numero = [];
-
 let linha = '';
 
 form.addEventListener('submit', function(e) {
@@ -12,28 +11,26 @@ form.addEventListener('submit', function(e) {
 })
 
 function adicionarLinha() {
-    const inputNomeContato = document.getElementById('nome-contato');
-    const inputNumeroContato = document.getElementById('numero-contato');
+    const inputNomeContato = document.getElementById('nome-contato').value;
+    const inputNumeroContato = document.getElementById('numero-contato').value;
 
-    if (nome.includes(inputNomeContato.value)) {
+    if (nome.includes(inputNomeContato)) {
         alert(`Contato ${inputNomeContato} ja cadastrado`);
     } else {
-        nome.push(inputNomeContato.value);
-        numero.push(parseFloat(inputNumeroContato.value));
-
-        let linha = '<tr>';
-        linha += `<td> ${inputNomeContato}</td>`;
-        linha += `<td> ${inputNumeroContato}</td>`;
-        linha += '</tr>';
-
-        linhas += linha;
+        nome.push(inputNomeContato);
+        numero.push(parseFloat(inputNumeroContato));
     }
-
-    inputNomeContato.value = '';
-    inputNumeroContato.value = '';
 }
 
 function atualizaTabela() {
     const corpoTabela = document.querySelector('tbody');
-    corpoTabela.innerHTML = linhas;
+
+    for (let i = 0; i < nome.length; i++) {
+        linha += '<tr>';
+        linha += '<td>${nome[i]}<td>';
+        linha += '<td>${numero[i]}<td>';
+        linha += '</tr>';
+    }
+
+    corpoTabela.innerHTML = linha;
 }
